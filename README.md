@@ -90,11 +90,21 @@ pytest tests/test_profile.py -v -s
 - отправка access token пользователя
 - получение User Profile
 - проверка username и email
-- проверка наличия обязательных полей:
+- проверка всех полей профиля:
   - id
+  - username
+  - email
+  - role_id
+  - profile_id
+  - is_active
+  - created_at
+  - updated_at
   - role
-- вывод информации профиля пользователя
-
+- проверка полей объекта role:
+  - id
+  - name
+  - description
+- вывод полной информации профиля пользователя
 ---
 
 ## Запуск проверки Admin Profile
@@ -109,13 +119,21 @@ pytest tests/test_admin.py -v -s
 - отправка access token администратора
 - получение Admin Profile
 - проверка роли admin
-- проверка обязательных полей профиля:
+- проверка всех полей профиля:
   - id
   - username
   - email
+  - role_id
+  - profile_id
   - is_active
-- вывод информации администратора
-
+  - created_at
+  - updated_at
+  - role
+- проверка полей объекта role:
+  - id
+  - name
+  - description
+- вывод полной информации администратора
 ---
 
 #### test_admin_get_all_profiles
