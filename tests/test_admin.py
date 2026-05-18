@@ -20,10 +20,8 @@ def test_get_admin_profile(admin_token):
 
     profile = data["profile"]
 
-    # Проверка роли администратора
     assert profile["role"]["name"] == "admin"
 
-    # Проверка обязательных полей профиля
     assert "id" in profile
     assert "username" in profile
     assert "email" in profile
@@ -34,7 +32,6 @@ def test_get_admin_profile(admin_token):
     assert "updated_at" in profile
     assert "role" in profile
 
-    # Проверка объекта role
     assert "id" in profile["role"]
     assert "name" in profile["role"]
     assert "description" in profile["role"]
@@ -59,7 +56,6 @@ def test_admin_get_all_profiles(admin_token):
 
     data = response.json()
 
-    # нормализация ответа
     if isinstance(data, list):
         users = data
     elif "profiles" in data:
