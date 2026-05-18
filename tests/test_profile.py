@@ -15,11 +15,9 @@ def test_get_user_profile(user_flow):
 
     profile = data["profile"]
 
-    # Проверка данных пользователя
     assert profile["username"] == user_flow["user"]["username"]
     assert profile["email"] == user_flow["user"]["email"]
 
-    # Проверка обязательных полей профиля
     assert "id" in profile
     assert "username" in profile
     assert "email" in profile
@@ -30,12 +28,10 @@ def test_get_user_profile(user_flow):
     assert "updated_at" in profile
     assert "role" in profile
 
-    # Проверка объекта role
     assert "id" in profile["role"]
     assert "name" in profile["role"]
     assert "description" in profile["role"]
 
-    # Вывод всей информации профиля
     print("\nUSER PROFILE")
     print(f"ID: {profile['id']}")
     print(f"Username: {profile['username']}")
