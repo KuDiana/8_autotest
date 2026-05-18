@@ -1,8 +1,19 @@
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+.pytest_cache/
+.cache/
+
 venv/
+.venv/
+
 .idea/
 
-__pycache__/
-*.pyc
+.DS_Store
+Thumbs.db
 
-.env
-.pytest_cache/
+*.log
+
+config.py
