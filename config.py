@@ -1,4 +1,4 @@
 BASE_URL = "https://secby.ru"
 
-ADMIN_USERNAME = "admin"
-ADMIN_PASSWORD = "admin123"
+ADMIN_USERNAME = ""
+ADMIN_PASSWORD = ""
