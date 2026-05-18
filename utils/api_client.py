@@ -18,7 +18,6 @@ def delete_user(user_id, admin_token):
         headers=headers
     )
 
-# Получение списка пользователей
 def get_profiles(token):
     headers = {"Authorization": f"Bearer {token}"}
 
@@ -27,7 +26,6 @@ def get_profiles(token):
         headers=headers
     )
 
-# Изменение роли пользователя
 def change_role(account_id, role_name, token):
     headers = {"Authorization": f"Bearer {token}"}
 
