@@ -9,23 +9,47 @@ from config import ADMIN_USERNAME
 
 # 0. ADMIN PROFILE
 def test_get_admin_profile(admin_token):
+
     response = get_profile(admin_token)
+
     assert response.status_code == 200
 
-    profile = response.json()["profile"]
+    data = response.json()
 
-    # Проверка, что это администратор
+    assert "profile" in data
+
+    profile = data["profile"]
+
+    # Проверка роли администратора
     assert profile["role"]["name"] == "admin"
 
     # Проверка обязательных полей профиля
     assert "id" in profile
     assert "username" in profile
     assert "email" in profile
+    assert "role_id" in profile
+    assert "profile_id" in profile
     assert "is_active" in profile
+    assert "created_at" in profile
+    assert "updated_at" in profile
+    assert "role" in profile
 
-    print(f"Admin ID: {profile['id']}")
-    print(f"Admin Username: {profile['username']}")
-    print(f"Admin Email: {profile['email']}")
+    # Проверка объекта role
+    assert "id" in profile["role"]
+    assert "name" in profile["role"]
+    assert "description" in profile["role"]
+
+    print("\nADMIN PROFILE")
+
+    print(f"ID: {profile['id']}")
+    print(f"Username: {profile['username']}")
+    print(f"Email: {profile['email']}")
+    print(f"Role ID: {profile['role_id']}")
+    print(f"Role: {profile['role']['name']}")
+    print(f"Role Description: {profile['role']['description']}")
+    print(f"Is Active: {profile['is_active']}")
+    print(f"Created At: {profile['created_at']}")
+    print(f"Updated At: {profile['updated_at']}")
 
 # 1. LIST USERS (ADMIN)
 def test_admin_get_all_profiles(admin_token):
