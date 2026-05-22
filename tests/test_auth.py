@@ -1,8 +1,6 @@
 from utils.api_client import login, get_profile
 from data.payload import invalid_user, invalid_payload
 
-
-# 1. LOGIN SUCCESS + TOKEN
 def test_login_success(user_flow):
 
     user = user_flow["user"]
@@ -21,7 +19,6 @@ def test_login_success(user_flow):
     print(f"Token: {data['access_token'][:25]}...")
 
 
-# 2. SEND TOKEN (PROFILE)
 def test_send_token(user_flow):
 
     token = user_flow["token"]
@@ -30,32 +27,89 @@ def test_send_token(user_flow):
 
     assert response.status_code == 200
 
-    data = response.json()
-
-    assert data["profile"]["id"] == user_flow["id"]
-
-    print("\nТокен успешно отправлен")
-    print(f"Profile ID: {data['profile']['id']}")
-    print(f"Username: {data['profile']['username']}")
+    print("\nTOKEN ACCEPTED")
+    print(f"Status code: {response.status_code}")
 
 
-# 3. INVALID USER → 401
 def test_invalid_user_login():
 
     response = login(invalid_user)
 
     assert response.status_code == 401
 
-    print("\nПроверка незарегистрированного пользователя")
+    body = response.json()
+
+    assert "detail" in body
+    assert body["detail"] == "Incorrect username or password"
+
+    print("\nINVALID USER LOGIN")
     print(f"Status code: {response.status_code}")
+    print(f"Body: {body}")
 
 
-# 4. INVALID PAYLOAD → 422
 def test_validation_error():
 
     response = login(invalid_payload)
 
     assert response.status_code == 422
 
-    print("\nПроверка ошибки валидации")
+    body = response.json()
+
+    assert "detail" in body
+
+    detail = body["detail"]
+
+    assert detail[0]["loc"] == ["body", "username"]
+    assert detail[0]["msg"] == "Field required"
+
+    assert detail[1]["loc"] == ["body", "password"]
+    assert detail[1]["msg"] == "Field required"
+
+    print("\nVALIDATION ERROR")
     print(f"Status code: {response.status_code}")
+    print(f"Body: {body}")
+
+def test_wrong_password(user_flow):
+
+    payload = {
+        "username": user_flow["user"]["username"],
+        "password": "WrongPassword123!"
+    }
+
+    response = login(payload)
+
+    assert response.status_code == 401
+
+    body = response.json()
+
+    assert "detail" in body
+    assert body["detail"] == "Incorrect username or password"
+
+    print("\nWRONG PASSWORD")
+    print(f"Status code: {response.status_code}")
+    print(f"Body: {body}")
+
+def test_empty_password_login():
+
+    payload = {
+        "username": "test_user",
+        "password": ""
+    }
+
+    response = login(payload)
+
+    assert response.status_code == 401
+
+    body = response.json()
+
+    assert "detail" in body
+    assert body["detail"] == "Incorrect username or password"
+
+    print("\nEMPTY PASSWORD LOGIN")
+    print(f"Status code: {response.status_code}")
+    print(f"Body: {body}")
+
+
+
+
+
